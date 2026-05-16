@@ -1,7 +1,10 @@
 package io.github.dontmashme.tennisladder.service.ladderentry;
 
+import io.github.dontmashme.tennisladder.dto.ladderentry.CreateLadderEntryRequest;
 import io.github.dontmashme.tennisladder.entity.LadderEntryEntity;
+import io.github.dontmashme.tennisladder.repository.LadderRepository;
 import io.github.dontmashme.tennisladder.repository.LadderEntryRepository;
+import io.github.dontmashme.tennisladder.repository.PlayerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -10,25 +13,48 @@ import java.util.List;
 
 @Service
 public class LadderEntryServiceImpl implements LadderEntryService {
-    private final LadderEntryRepository repository;
+    private final LadderEntryRepository ladderEntryRepository;
+    private final LadderRepository ladderRepository;
+    private final PlayerRepository playerRepository;
 
-    public LadderEntryServiceImpl(LadderEntryRepository repository) {
-        this.repository = repository;
+    public LadderEntryServiceImpl(
+            LadderEntryRepository ladderEntryRepository,
+            LadderRepository ladderRepository,
+            PlayerRepository playerRepository
+    ) {
+        this.ladderEntryRepository = ladderEntryRepository;
+        this.ladderRepository = ladderRepository;
+        this.playerRepository = playerRepository;
     }
 
     @Override
-    public LadderEntryEntity saveLadderEntry(LadderEntryEntity ladderEntry) {
-        return this.repository.save(ladderEntry);
+    public LadderEntryEntity saveLadderEntry(CreateLadderEntryRequest request) {
+        var ladder = this.ladderRepository.findById(request.getLadderId())
+                .orElseThrow(() -> new EntityNotFoundException("Ladder not found: " + request.getLadderId()));
+        var player = this.playerRepository.findById(request.getPlayerId())
+                .orElseThrow(() -> new EntityNotFoundException("Player not found: " + request.getPlayerId()));
+        var now = OffsetDateTime.now();
+
+        var ladderEntry = new LadderEntryEntity();
+        ladderEntry.setLadder(ladder);
+        ladderEntry.setPlayer(player);
+        ladderEntry.setPosition(request.getPosition());
+        ladderEntry.setStatus(request.getStatus());
+        ladderEntry.setJoinedAt(now);
+        ladderEntry.setCreatedAt(now);
+        ladderEntry.setUpdatedAt(now);
+
+        return this.ladderEntryRepository.save(ladderEntry);
     }
 
     @Override
     public List<LadderEntryEntity> fetchAllLadderEntries() {
-        return this.repository.findAll();
+        return this.ladderEntryRepository.findAll();
     }
 
     @Override
     public LadderEntryEntity updateLadderEntry(Long id, LadderEntryEntity updated) {
-        var ladderEntry = this.repository.findById(id)
+        var ladderEntry = this.ladderEntryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Ladder entry not found: " + id));
 
         ladderEntry.setLadder(updated.getLadder());
@@ -39,11 +65,11 @@ public class LadderEntryServiceImpl implements LadderEntryService {
         ladderEntry.setLeftAt(updated.getLeftAt());
         ladderEntry.setUpdatedAt(OffsetDateTime.now());
 
-        return this.repository.save(ladderEntry);
+        return this.ladderEntryRepository.save(ladderEntry);
     }
 
     @Override
     public void deleteLadderEntryById(Long id) {
-        this.repository.deleteById(id);
+        this.ladderEntryRepository.deleteById(id);
     }
 }

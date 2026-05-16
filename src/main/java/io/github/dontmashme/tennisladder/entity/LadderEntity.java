@@ -3,7 +3,6 @@ package io.github.dontmashme.tennisladder.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 @Getter
@@ -28,10 +27,10 @@ public class LadderEntity {
     private String status;
 
     @Column(name = "starts_on")
-    private LocalDate startsOn;
+    private OffsetDateTime startsOn;
 
     @Column(name = "ends_on")
-    private LocalDate endsOn;
+    private OffsetDateTime endsOn;
 
     @Column(name = "created_at", nullable = false)
     private OffsetDateTime createdAt;

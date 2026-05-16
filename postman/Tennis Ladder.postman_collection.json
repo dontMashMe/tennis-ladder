@@ -185,7 +185,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"ladder\": {\n    \"id\": {{ladderId}}\n  },\n  \"player\": {\n    \"id\": {{playerId}}\n  },\n  \"position\": 1,\n  \"status\": \"active\"\n}"
+              "raw": "{\n  \"ladderId\": {{ladderId}},\n  \"playerId\": {{playerId}},\n  \"position\": 1,\n  \"status\": \"active\"\n}"
             },
             "url": "{{baseUrl}}/api/ladder-entries"
           }
@@ -218,7 +218,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"ladder\": {\n    \"id\": {{ladderId}}\n  },\n  \"player\": {\n    \"id\": {{playerId}}\n  },\n  \"position\": 2,\n  \"status\": \"active\"\n}"
+              "raw": "{\n  \"ladderId\": {{ladderId}},\n  \"playerId\": {{playerId}},\n  \"position\": 2,\n  \"status\": \"active\"\n}"
             },
             "url": "{{baseUrl}}/api/ladder-entries/{{ladderEntryId}}"
           }

@@ -7,12 +7,8 @@ body:
   type: text
   content: |-
     {
-      "ladder": {
-        "id": {{ladderId}}
-      },
-      "player": {
-        "id": {{playerId}}
-      },
+      "ladderId": {{ladderId}},
+      "playerId": {{playerId}},
       "position": 2,
       "status": "active"
     }
