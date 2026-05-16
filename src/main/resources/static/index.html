@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tennis Ladder</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f6f7f9;
+            --panel: #ffffff;
+            --line: #d8dde6;
+            --text: #1f2937;
+            --muted: #64748b;
+            --accent: #147a5c;
+            --accent-dark: #0f6048;
+            --danger: #b42318;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        header {
+            border-bottom: 1px solid var(--line);
+            background: var(--panel);
+        }
+
+        .header-inner,
+        main {
+            width: min(1120px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .header-inner {
+            padding: 20px 0;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            padding: 24px 0;
+        }
+
+        section {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        h2 {
+            margin: 0 0 14px;
+            font-size: 18px;
+        }
+
+        form {
+            display: grid;
+            gap: 12px;
+        }
+
+        label {
+            display: grid;
+            gap: 6px;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        input,
+        textarea,
+        select,
+        button {
+            width: 100%;
+            min-height: 40px;
+            border-radius: 6px;
+            font: inherit;
+        }
+
+        input,
+        textarea,
+        select {
+            border: 1px solid var(--line);
+            padding: 9px 10px;
+            background: #ffffff;
+            color: var(--text);
+        }
+
+        textarea {
+            min-height: 82px;
+            resize: vertical;
+        }
+
+        button {
+            border: 0;
+            padding: 9px 12px;
+            background: var(--accent);
+            color: #ffffff;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        button:hover {
+            background: var(--accent-dark);
+        }
+
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.65;
+        }
+
+        .list {
+            display: grid;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .row {
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            padding: 10px;
+            background: #fbfcfd;
+        }
+
+        .row strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .row span {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .message {
+            grid-column: 1 / -1;
+            min-height: 42px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 11px 12px;
+            background: var(--panel);
+            color: var(--muted);
+        }
+
+        .message.error {
+            border-color: #f0b5af;
+            color: var(--danger);
+        }
+
+        @media (max-width: 860px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-inner">
+        <h1>Tennis Ladder</h1>
+    </div>
+</header>
+
+<main>
+    <section>
+        <h2>Create Ladder</h2>
+        <form id="ladderForm">
+            <label>
+                Name
+                <input id="ladderName" autocomplete="off" required placeholder="Spring ladder">
+            </label>
+            <label>
+                Description
+                <textarea id="ladderDescription" placeholder="Optional"></textarea>
+            </label>
+            <button type="submit">Create Ladder</button>
+        </form>
+        <div class="list" id="ladderList"></div>
+    </section>
+
+    <section>
+        <h2>Create Player</h2>
+        <form id="playerForm">
+            <label>
+                Display Name
+                <input id="playerDisplayName" autocomplete="off" required placeholder="Jan Kowalski">
+            </label>
+            <label>
+                Email
+                <input id="playerEmail" type="email" autocomplete="off" placeholder="jan@example.com">
+            </label>
+            <button type="submit">Create Player</button>
+        </form>
+        <div class="list" id="playerList"></div>
+    </section>
+
+    <section>
+        <h2>Add Player To Ladder</h2>
+        <form id="entryForm">
+            <label>
+                Ladder
+                <select id="entryLadder" required></select>
+            </label>
+            <label>
+                Player
+                <select id="entryPlayer" required></select>
+            </label>
+            <label>
+                Position
+                <input id="entryPosition" type="number" min="1" step="1" value="1" required>
+            </label>
+            <button type="submit">Add To Ladder</button>
+        </form>
+        <div class="list" id="entryList"></div>
+    </section>
+
+    <div class="message" id="message">Create a ladder and at least one player, then add the player to the ladder.</div>
+</main>
+
+<script>
+    const ladders = [];
+    const players = [];
+    const entries = [];
+
+    const message = document.querySelector("#message");
+    const ladderForm = document.querySelector("#ladderForm");
+    const playerForm = document.querySelector("#playerForm");
+    const entryForm = document.querySelector("#entryForm");
+
+    function showMessage(text, isError = false) {
+        message.textContent = text;
+        message.classList.toggle("error", isError);
+    }
+
+    async function apiPost(url, body) {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(body)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || `Request failed with status ${response.status}`);
+        }
+
+        return response.json();
+    }
+
+    function renderSelect(select, items, emptyText) {
+        select.innerHTML = "";
+
+        if (items.length === 0) {
+            const option = document.createElement("option");
+            option.value = "";
+            option.textContent = emptyText;
+            select.append(option);
+            return;
+        }
+
+        for (const item of items) {
+            const option = document.createElement("option");
+            option.value = item.id;
+            option.textContent = item.name || item.displayName;
+            select.append(option);
+        }
+    }
+
+    function render() {
+        document.querySelector("#ladderList").innerHTML = ladders.map(ladder => `
+            <div class="row">
+                <strong>${escapeHtml(ladder.name)}</strong>
+                <span>ID ${ladder.id}</span>
+            </div>
+        `).join("");
+
+        document.querySelector("#playerList").innerHTML = players.map(player => `
+            <div class="row">
+                <strong>${escapeHtml(player.displayName)}</strong>
+                <span>ID ${player.id}${player.email ? ` · ${escapeHtml(player.email)}` : ""}</span>
+            </div>
+        `).join("");
+
+        document.querySelector("#entryList").innerHTML = entries.map(entry => `
+            <div class="row">
+                <strong>${escapeHtml(entry.player.displayName)} in ${escapeHtml(entry.ladder.name)}</strong>
+                <span>Position ${entry.position}</span>
+            </div>
+        `).join("");
+
+        renderSelect(document.querySelector("#entryLadder"), ladders, "Create a ladder first");
+        renderSelect(document.querySelector("#entryPlayer"), players, "Create a player first");
+    }
+
+    function escapeHtml(value) {
+        return String(value)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+
+    ladderForm.addEventListener("submit", async event => {
+        event.preventDefault();
+        const button = event.submitter;
+        button.disabled = true;
+
+        try {
+            const ladder = await apiPost("/api/ladder", {
+                name: document.querySelector("#ladderName").value.trim(),
+                description: document.querySelector("#ladderDescription").value.trim(),
+                status: "active"
+            });
+            ladders.push(ladder);
+            ladderForm.reset();
+            render();
+            showMessage(`Created ladder "${ladder.name}".`);
+        } catch (error) {
+            showMessage(error.message, true);
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+    playerForm.addEventListener("submit", async event => {
+        event.preventDefault();
+        const button = event.submitter;
+        button.disabled = true;
+
+        try {
+            const player = await apiPost("/api/players", {
+                displayName: document.querySelector("#playerDisplayName").value.trim(),
+                email: document.querySelector("#playerEmail").value.trim() || null
+            });
+            players.push(player);
+            playerForm.reset();
+            render();
+            showMessage(`Created player "${player.displayName}".`);
+        } catch (error) {
+            showMessage(error.message, true);
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+    entryForm.addEventListener("submit", async event => {
+        event.preventDefault();
+        const button = event.submitter;
+        button.disabled = true;
+
+        try {
+            const entry = await apiPost("/api/ladder-entries", {
+                ladderId: Number(document.querySelector("#entryLadder").value),
+                playerId: Number(document.querySelector("#entryPlayer").value),
+                position: Number(document.querySelector("#entryPosition").value),
+                status: "active"
+            });
+            entries.push(entry);
+            render();
+            showMessage("Added player to ladder.");
+        } catch (error) {
+            showMessage(error.message, true);
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+    render();
+</script>
+</body>
+</html>
