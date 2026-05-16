@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{baseUrl}}/api/set-scores/{{setScoreId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "match": {
+        "id": {{matchId}}
+      },
+      "setNumber": 1,
+      "winnerGames": 7,
+      "loserGames": 6,
+      "winnerTiebreakPoints": 7,
+      "loserTiebreakPoints": 4
+    }
+order: 4000

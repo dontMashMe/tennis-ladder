@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{baseUrl}}/api/ladders/{{ladderId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Spring 2026 Ladder",
+      "description": "Updated local club spring ladder",
+      "status": "active",
+      "startsOn": "2026-05-16",
+      "endsOn": "2026-08-31"
+    }
+order: 4000

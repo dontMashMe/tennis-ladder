@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{baseUrl}}/api/set-scores"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "match": {
+        "id": {{matchId}}
+      },
+      "setNumber": 1,
+      "winnerGames": 6,
+      "loserGames": 4,
+      "winnerTiebreakPoints": null,
+      "loserTiebreakPoints": null
+    }
+order: 1000

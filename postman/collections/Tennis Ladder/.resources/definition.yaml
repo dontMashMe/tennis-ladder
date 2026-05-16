@@ -1,0 +1,12 @@
+$kind: collection
+description: Basic CRUD requests for the Tennis Ladder API. These routes assume conventional REST controllers under /api.
+variables:
+  baseUrl: http://localhost:8080
+  playerId: "1"
+  ladderId: "1"
+  ladderEntryId: "1"
+  challengerEntryId: "1"
+  challengedEntryId: "2"
+  challengeId: "1"
+  matchId: "1"
+  setScoreId: "1"

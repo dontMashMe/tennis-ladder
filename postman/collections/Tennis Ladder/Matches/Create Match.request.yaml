@@ -1,0 +1,25 @@
+$kind: http-request
+url: "{{baseUrl}}/api/matches"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "ladder": {
+        "id": {{ladderId}}
+      },
+      "challenge": {
+        "id": {{challengeId}}
+      },
+      "winnerEntry": {
+        "id": {{challengerEntryId}}
+      },
+      "loserEntry": {
+        "id": {{challengedEntryId}}
+      },
+      "playedOn": "2026-05-16",
+      "notes": "Straight sets."
+    }
+order: 1000

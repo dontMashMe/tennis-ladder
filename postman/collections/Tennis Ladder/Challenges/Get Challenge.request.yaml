@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/challenges/{{challengeId}}"
+method: GET
+order: 3000

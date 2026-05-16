@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/ladder-entries/{{ladderEntryId}}"
+method: DELETE
+order: 5000

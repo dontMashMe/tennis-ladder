@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{baseUrl}}/api/ladder-entries/{{ladderEntryId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "ladder": {
+        "id": {{ladderId}}
+      },
+      "player": {
+        "id": {{playerId}}
+      },
+      "position": 2,
+      "status": "active"
+    }
+order: 4000

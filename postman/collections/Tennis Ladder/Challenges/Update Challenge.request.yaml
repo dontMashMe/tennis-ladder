@@ -1,0 +1,22 @@
+$kind: http-request
+url: "{{baseUrl}}/api/challenges/{{challengeId}}"
+method: PUT
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "ladder": {
+        "id": {{ladderId}}
+      },
+      "challengerEntry": {
+        "id": {{challengerEntryId}}
+      },
+      "challengedEntry": {
+        "id": {{challengedEntryId}}
+      },
+      "status": "accepted",
+      "message": "Accepted."
+    }
+order: 4000

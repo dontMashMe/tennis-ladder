@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/challenges/{{challengeId}}"
+method: DELETE
+order: 5000

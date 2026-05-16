@@ -1,0 +1,426 @@
+{
+  "info": {
+    "_postman_id": "6f3cf95b-b586-4ec3-b6f7-7d2db5a622a3",
+    "name": "Tennis Ladder",
+    "description": "Basic CRUD requests for the Tennis Ladder API. These routes assume conventional REST controllers under /api.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "playerId",
+      "value": "1"
+    },
+    {
+      "key": "ladderId",
+      "value": "1"
+    },
+    {
+      "key": "ladderEntryId",
+      "value": "1"
+    },
+    {
+      "key": "challengerEntryId",
+      "value": "1"
+    },
+    {
+      "key": "challengedEntryId",
+      "value": "2"
+    },
+    {
+      "key": "challengeId",
+      "value": "1"
+    },
+    {
+      "key": "matchId",
+      "value": "1"
+    },
+    {
+      "key": "setScoreId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Players",
+      "item": [
+        {
+          "name": "Create Player",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"Jan Kowalski\",\n  \"email\": \"jan.kowalski@example.com\"\n}"
+            },
+            "url": "{{baseUrl}}/api/players"
+          }
+        },
+        {
+          "name": "List Players",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/players"
+          }
+        },
+        {
+          "name": "Get Player",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/players/{{playerId}}"
+          }
+        },
+        {
+          "name": "Update Player",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"displayName\": \"Jan Nowak\",\n  \"email\": \"jan.nowak@example.com\"\n}"
+            },
+            "url": "{{baseUrl}}/api/players/{{playerId}}"
+          }
+        },
+        {
+          "name": "Delete Player",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/players/{{playerId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ladders",
+      "item": [
+        {
+          "name": "Create Ladder",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Spring 2026 Ladder\",\n  \"description\": \"Local club spring ladder\",\n  \"status\": \"active\",\n  \"startsOn\": \"2026-05-16\",\n  \"endsOn\": \"2026-08-31\"\n}"
+            },
+            "url": "{{baseUrl}}/api/ladders"
+          }
+        },
+        {
+          "name": "List Ladders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/ladders"
+          }
+        },
+        {
+          "name": "Get Ladder",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/ladders/{{ladderId}}"
+          }
+        },
+        {
+          "name": "Update Ladder",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Spring 2026 Ladder\",\n  \"description\": \"Updated local club spring ladder\",\n  \"status\": \"active\",\n  \"startsOn\": \"2026-05-16\",\n  \"endsOn\": \"2026-08-31\"\n}"
+            },
+            "url": "{{baseUrl}}/api/ladders/{{ladderId}}"
+          }
+        },
+        {
+          "name": "Delete Ladder",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/ladders/{{ladderId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ladder Entries",
+      "item": [
+        {
+          "name": "Create Ladder Entry",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ladder\": {\n    \"id\": {{ladderId}}\n  },\n  \"player\": {\n    \"id\": {{playerId}}\n  },\n  \"position\": 1,\n  \"status\": \"active\"\n}"
+            },
+            "url": "{{baseUrl}}/api/ladder-entries"
+          }
+        },
+        {
+          "name": "List Ladder Entries",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/ladder-entries"
+          }
+        },
+        {
+          "name": "Get Ladder Entry",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/ladder-entries/{{ladderEntryId}}"
+          }
+        },
+        {
+          "name": "Update Ladder Entry",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ladder\": {\n    \"id\": {{ladderId}}\n  },\n  \"player\": {\n    \"id\": {{playerId}}\n  },\n  \"position\": 2,\n  \"status\": \"active\"\n}"
+            },
+            "url": "{{baseUrl}}/api/ladder-entries/{{ladderEntryId}}"
+          }
+        },
+        {
+          "name": "Delete Ladder Entry",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/ladder-entries/{{ladderEntryId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Challenges",
+      "item": [
+        {
+          "name": "Create Challenge",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ladder\": {\n    \"id\": {{ladderId}}\n  },\n  \"challengerEntry\": {\n    \"id\": {{challengerEntryId}}\n  },\n  \"challengedEntry\": {\n    \"id\": {{challengedEntryId}}\n  },\n  \"status\": \"pending\",\n  \"message\": \"Want to play this week?\"\n}"
+            },
+            "url": "{{baseUrl}}/api/challenges"
+          }
+        },
+        {
+          "name": "List Challenges",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/challenges"
+          }
+        },
+        {
+          "name": "Get Challenge",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/challenges/{{challengeId}}"
+          }
+        },
+        {
+          "name": "Update Challenge",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ladder\": {\n    \"id\": {{ladderId}}\n  },\n  \"challengerEntry\": {\n    \"id\": {{challengerEntryId}}\n  },\n  \"challengedEntry\": {\n    \"id\": {{challengedEntryId}}\n  },\n  \"status\": \"accepted\",\n  \"message\": \"Accepted.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/challenges/{{challengeId}}"
+          }
+        },
+        {
+          "name": "Delete Challenge",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/challenges/{{challengeId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Matches",
+      "item": [
+        {
+          "name": "Create Match",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ladder\": {\n    \"id\": {{ladderId}}\n  },\n  \"challenge\": {\n    \"id\": {{challengeId}}\n  },\n  \"winnerEntry\": {\n    \"id\": {{challengerEntryId}}\n  },\n  \"loserEntry\": {\n    \"id\": {{challengedEntryId}}\n  },\n  \"playedOn\": \"2026-05-16\",\n  \"notes\": \"Straight sets.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/matches"
+          }
+        },
+        {
+          "name": "List Matches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/matches"
+          }
+        },
+        {
+          "name": "Get Match",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/matches/{{matchId}}"
+          }
+        },
+        {
+          "name": "Update Match",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ladder\": {\n    \"id\": {{ladderId}}\n  },\n  \"challenge\": {\n    \"id\": {{challengeId}}\n  },\n  \"winnerEntry\": {\n    \"id\": {{challengerEntryId}}\n  },\n  \"loserEntry\": {\n    \"id\": {{challengedEntryId}}\n  },\n  \"playedOn\": \"2026-05-16\",\n  \"notes\": \"Updated match notes.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/matches/{{matchId}}"
+          }
+        },
+        {
+          "name": "Delete Match",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/matches/{{matchId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Set Scores",
+      "item": [
+        {
+          "name": "Create Set Score",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"match\": {\n    \"id\": {{matchId}}\n  },\n  \"setNumber\": 1,\n  \"winnerGames\": 6,\n  \"loserGames\": 4,\n  \"winnerTiebreakPoints\": null,\n  \"loserTiebreakPoints\": null\n}"
+            },
+            "url": "{{baseUrl}}/api/set-scores"
+          }
+        },
+        {
+          "name": "List Set Scores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/set-scores"
+          }
+        },
+        {
+          "name": "Get Set Score",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/set-scores/{{setScoreId}}"
+          }
+        },
+        {
+          "name": "Update Set Score",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"match\": {\n    \"id\": {{matchId}}\n  },\n  \"setNumber\": 1,\n  \"winnerGames\": 7,\n  \"loserGames\": 6,\n  \"winnerTiebreakPoints\": 7,\n  \"loserTiebreakPoints\": 4\n}"
+            },
+            "url": "{{baseUrl}}/api/set-scores/{{setScoreId}}"
+          }
+        },
+        {
+          "name": "Delete Set Score",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/set-scores/{{setScoreId}}"
+          }
+        }
+      ]
+    }
+  ]
+}

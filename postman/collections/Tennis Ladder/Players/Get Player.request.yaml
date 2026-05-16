@@ -1,0 +1,4 @@
+$kind: http-request
+url: "{{baseUrl}}/api/players/{{playerId}}"
+method: GET
+order: 3000
