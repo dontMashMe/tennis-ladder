@@ -1,4 +1,4 @@
-package io.github.dontmashme.tennis_ladder;
+package io.github.dontmashme.tennisladder;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
