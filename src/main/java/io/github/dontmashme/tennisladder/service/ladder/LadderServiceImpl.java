@@ -5,6 +5,7 @@ import io.github.dontmashme.tennisladder.repository.LadderRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -35,7 +36,7 @@ public class LadderServiceImpl implements LadderService {
         ladder.setStatus(updated.getStatus());
         ladder.setStartsOn(updated.getStartsOn());
         ladder.setEndsOn(updated.getEndsOn());
-        ladder.setUpdatedAt(updated.getUpdatedAt());
+        ladder.setUpdatedAt(OffsetDateTime.now());
 
         return this.repository.save(ladder);
     }

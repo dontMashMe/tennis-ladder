@@ -5,6 +5,7 @@ import io.github.dontmashme.tennisladder.repository.MatchRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -36,7 +37,7 @@ public class MatchServiceImpl implements MatchService {
         match.setLoserEntry(updated.getLoserEntry());
         match.setPlayedOn(updated.getPlayedOn());
         match.setNotes(updated.getNotes());
-        match.setUpdatedAt(updated.getUpdatedAt());
+        match.setUpdatedAt(OffsetDateTime.now());
 
         return this.repository.save(match);
     }

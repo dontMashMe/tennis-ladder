@@ -5,6 +5,7 @@ import io.github.dontmashme.tennisladder.repository.ChallengeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -39,7 +40,7 @@ public class ChallengeServiceImpl implements ChallengeService {
         challenge.setAcceptedAt(updated.getAcceptedAt());
         challenge.setDeclinedAt(updated.getDeclinedAt());
         challenge.setCancelledAt(updated.getCancelledAt());
-        challenge.setUpdatedAt(updated.getUpdatedAt());
+        challenge.setUpdatedAt(OffsetDateTime.now());
 
         return this.repository.save(challenge);
     }
